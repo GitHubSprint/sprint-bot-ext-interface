@@ -16,7 +16,8 @@
         </dependency>
 
 3. Usage examle
-<code>
+    Create e.g Main class. 
+    <code>
 
     import pl.sprint.chatbot.ext.lib.logger.Logger;
 
@@ -47,4 +48,4 @@
             Logger.getInstance().WriteToLog("Main " + session + " : " + message);
         }
     }
-</code>
+    </code>
