@@ -1,4 +1,4 @@
-# External SprintBot plugin interface and logger
+# External SprintBot plugin interface and logger v1.0.1
 
 ## Usage - Build Yourself
 
