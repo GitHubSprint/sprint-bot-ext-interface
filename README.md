@@ -14,3 +14,34 @@
             <artifactId>sprint-bot-ext-interface</artifactId>
             <version>1.0.1</version>            
         </dependency>
+
+3. Usage examle
+
+    import pl.sprint.chatbot.ext.lib.logger.Logger;
+    import pl.sprint.sprint.chatbot.ext.lib.ChatBotCustomResultProcessor;
+
+    //Add Constructor and impletment Interface and all requied methods.
+    public class Main implements ChatBotCustomResultProcessor
+    {
+        //setLogger required in Constructor
+        public Main() 
+        {    
+            setLogger("sprintbot.ext.lib");
+            
+        }
+
+        @Override
+        public String processCustomResultPocessor(String session, String parameter, String method) 
+        {
+            log("parameter: " + parameter + " method: " + method, session);
+        }
+        @Override
+        public void setLogger(String logname) {
+            Logger.getInstance().setLogger(logname);
+        }
+
+        @Override
+        public void log(String message, String session) {
+            Logger.getInstance().WriteToLog("Main " + session + " : " + message);
+        }
+    }
