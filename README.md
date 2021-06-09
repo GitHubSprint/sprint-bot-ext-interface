@@ -16,7 +16,7 @@
         </dependency>
 
 3. Usage examle
-
+<code>
     import pl.sprint.chatbot.ext.lib.logger.Logger;
     import pl.sprint.sprint.chatbot.ext.lib.ChatBotCustomResultProcessor;
 
@@ -45,3 +45,4 @@
             Logger.getInstance().WriteToLog("Main " + session + " : " + message);
         }
     }
+</code>
