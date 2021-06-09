@@ -17,9 +17,8 @@
 
 3. Usage examle
 
-    Create e.g Main class. 
-    <code>
-
+###Create e.g Main class. 
+```java
     import pl.sprint.chatbot.ext.lib.logger.Logger;
 
     import pl.sprint.sprint.chatbot.ext.lib.ChatBotCustomResultProcessor;
@@ -49,4 +48,4 @@
             Logger.getInstance().WriteToLog("Main " + session + " : " + message);
         }
     }
-    </code>
+```
