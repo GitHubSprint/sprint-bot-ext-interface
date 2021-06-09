@@ -20,7 +20,6 @@
 Create e.g Main class. 
 ```java
     import pl.sprint.chatbot.ext.lib.logger.Logger;
-
     import pl.sprint.sprint.chatbot.ext.lib.ChatBotCustomResultProcessor;
 
     //Add Constructor and impletment Interface and all requied methods.
