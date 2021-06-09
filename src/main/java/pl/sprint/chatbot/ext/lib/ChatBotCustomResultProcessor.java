@@ -2,7 +2,7 @@
  * Copyright © 2019 Sprint S.A.
  * Contact: slawomir.kostrzewa@sprint.pl
  */
-package pl.sprint.sprint.chatbot.ext.lib;
+package pl.sprint.chatbot.ext.lib;
 
 /**
  * Interfejs wymaganay przez Bot.
