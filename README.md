@@ -17,7 +17,8 @@
 
 3. Usage examle
 
-Create e.g Main class. 
+Create e.g Main.class
+
 ```java
     import pl.sprint.chatbot.ext.lib.logger.Logger;
     import pl.sprint.chatbot.ext.lib.ChatBotCustomResultProcessor;
