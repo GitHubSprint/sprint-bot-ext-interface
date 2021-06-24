@@ -2,22 +2,23 @@
 
 ## Usage - Build Yourself
 
-1. Build using [Maven](http://maven.apache.org) to your local Maven repository:
+### Build using [Maven](http://maven.apache.org) to your local Maven repository:
 
         mvn -DskipTests install
 
-2. Use in your Maven project:
-
+### Use in your Maven project:
+```xml
         <!-- https://github.com/GitHubSprint/sprint-bot-ext-interface -->         
         <dependency>
             <groupId>pl.sprint</groupId>
             <artifactId>sprint-bot-ext-interface</artifactId>
             <version>1.0.1</version>            
         </dependency>
+```
 
-3. Usage examle
+### Usage examle
 
-## Create e.g Main.class
+#### Create e.g Main.class
 
 ```java
     import pl.sprint.chatbot.ext.lib.logger.Logger;
@@ -50,9 +51,9 @@
     }
 ```
 
-## pom.xml settings (not required)
+### pom.xml settings (not required)
 
-### Properties section
+#### Properties section
 ```xml
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -63,7 +64,7 @@
     </properties>
 ```
 
-### Build section
+#### Build section
 ```xml
     <build>
         <plugins>
@@ -112,8 +113,7 @@
                        <phase>install</phase>
                        <configuration>
                            <target>
-                               <copy file="target/${project.artifactId}-${project.version}-jar-with-dependencies.jar" tofile="target/${project.artifactId}.jar"/>
-                               <copy file="target/${project.artifactId}-${project.version}-jar-with-dependencies.jar" tofile="../../../../Sprint/SRC/sprint-bot-server/lib/${project.artifactId}.jar"/>
+                               <copy file="target/${project.artifactId}-${project.version}-jar-with-dependencies.jar" tofile="target/${project.artifactId}.jar"/>                               
                            </target>
                        </configuration>
                        <goals>
