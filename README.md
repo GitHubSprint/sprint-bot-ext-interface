@@ -59,7 +59,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <!-- path to MAIN class -->
+        <!-- path to MAIN class used in Build section as ${mainClass} -->
         <mainClass>pl.sprint.chatbot.ext.lib.pgg.Main</mainClass>
     </properties>
 ```
