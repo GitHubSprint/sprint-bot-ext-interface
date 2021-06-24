@@ -17,7 +17,7 @@
 
 3. Usage examle
 
-##Create e.g Main.class
+## Create e.g Main.class
 
 ```java
     import pl.sprint.chatbot.ext.lib.logger.Logger;
@@ -50,9 +50,9 @@
     }
 ```
 
-##pom.xml settings (not required)
+## pom.xml settings (not required)
 
-###Properties section
+### Properties section
 ```xml
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -63,7 +63,7 @@
     </properties>
 ```
 
-###Build section
+### Build section
 ```xml
     <build>
         <plugins>
