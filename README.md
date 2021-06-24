@@ -49,3 +49,79 @@ Create e.g Main.class
         }
     }
 ```
+
+pom.xml settings (not required)
+
+Properties section
+```xml
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- path to MAIN class -->
+        <mainClass>pl.sprint.chatbot.ext.lib.pgg.Main</mainClass>
+    </properties>
+```
+
+Build section
+```xml
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>${mainClass}</mainClass>
+                        </manifest>
+                    </archive>            
+                </configuration>
+
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest> 
+                            <mainClass>${mainClass}</mainClass>                 
+                        </manifest> 
+                    </archive>
+                  <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                  </descriptorRefs>
+                </configuration>
+                <executions>
+                  <execution>
+                    <id>simple-command</id>
+                    <phase>package</phase>
+                    <goals>
+                      <goal>attached</goal>
+                    </goals>
+                  </execution>
+                </executions>
+            </plugin>        
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-antrun-plugin</artifactId>
+               <version>1.8</version>
+               <executions>
+                   <execution>
+                       <phase>install</phase>
+                       <configuration>
+                           <target>
+                               <copy file="target/${project.artifactId}-${project.version}-jar-with-dependencies.jar" tofile="target/${project.artifactId}.jar"/>
+                               <copy file="target/${project.artifactId}-${project.version}-jar-with-dependencies.jar" tofile="../../../../Sprint/SRC/sprint-bot-server/lib/${project.artifactId}.jar"/>
+                           </target>
+                       </configuration>
+                       <goals>
+                           <goal>run</goal>
+                       </goals>
+                   </execution>
+               </executions>
+           </plugin>
+        </plugins>
+    </build>
+```
