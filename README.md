@@ -1,5 +1,7 @@
 # External SprintBot plugin interface and logger v1.0.1
 
+Generated library should be copied to folder ./lib of SprinBot server. 
+
 ## Usage - Build Yourself
 
 ### Build using [Maven](http://maven.apache.org) to your local Maven repository:
