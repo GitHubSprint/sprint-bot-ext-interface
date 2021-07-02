@@ -1,6 +1,6 @@
 # External SprintBot plugin interface and logger v1.0.1
 
-Generated library should be copied to folder ./lib of SprinBot server. 
+Generated library should be copied to folder ./lib of SprinBot server. Remember ti restart SprintBot service after update. 
 
 ## Usage - Build Yourself
 
