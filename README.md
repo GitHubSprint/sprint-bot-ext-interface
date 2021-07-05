@@ -14,7 +14,7 @@ Generated library should be copied to folder ./lib of SprinBot server. Remember 
         <dependency>
             <groupId>pl.sprint</groupId>
             <artifactId>sprint-bot-ext-interface</artifactId>
-            <version>1.0.1</version>            
+            <version>1.0.2</version>            
         </dependency>
 ```
 
