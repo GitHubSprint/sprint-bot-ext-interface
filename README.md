@@ -29,10 +29,18 @@ Generated library should be copied to folder ./lib of SprinBot server. Remember 
     //Add Constructor and impletment Interface and all requied methods.
     public class Main implements ChatBotCustomResultProcessor
     {
+        private final String endpoint;
+        private final int timeout;
+        
         //setLogger required in Constructor
         public Main() 
         {    
-            setLogger("sprintbot.ext.lib");
+            setLogger("sprintbot.ext.lib"); //name of log file
+            
+            //example getconfigure parameters
+            Conf.configure("services.properties"); //name of config file if used [path=$SPRINBOTSERVER/config/plugins/services.properties]
+            endpoint = Conf.getValue("endpoint", "http://some_web_service_wsdl");
+            timeout = Integer.parseInt(Conf.getValue("timeout", "8000"));
             
         }
 
