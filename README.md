@@ -25,6 +25,9 @@ Generated library should be copied to folder ./lib of SprinBot server. Remember 
 ```java
     import pl.sprint.chatbot.ext.lib.logger.Logger;
     import pl.sprint.chatbot.ext.lib.ChatBotCustomResultProcessor;
+    import pl.sprint.chatbot.ext.lib.Conf;
+    import pl.sprint.chatbot.ext.lib.Utils;
+    import pl.sprint.chatbot.ext.lib.logger.Logger;
 
     //Add Constructor and impletment Interface and all requied methods.
     public class Main implements ChatBotCustomResultProcessor
