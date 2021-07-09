@@ -34,8 +34,10 @@ public class Conf {
         
         try {
             ret = appProps.getProperty(key);
+            if(ret == null)
+                ret = defaultValue; 
         } catch (Exception e) {
-            Logger.getInstance().WriteToLog("Config getValue exception message: " + e.getMessage(), LogMessagePriority.Error);
+            Logger.getInstance().WriteToLog("Config getValue exception message: " + e.getMessage(), LogMessagePriority.Error);            
         }
         
         Logger.getInstance().WriteToLog("Config getValue key: " + key + " value: " + ret);
@@ -62,6 +64,7 @@ public class Conf {
             appProps.load(new FileInputStream("config/plugins/" + confFileName));
         } catch (Exception ex) {
             Logger.getInstance().WriteToLog("Config configure exception message: " + ex.getMessage(), LogMessagePriority.Error);
+            appProps = null;
         }
         
     }
