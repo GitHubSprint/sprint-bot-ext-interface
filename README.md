@@ -30,7 +30,7 @@ Generated library should be copied to folder ./lib of SprinBot server. Remember 
     import pl.sprint.chatbot.ext.lib.logger.Logger;
 
     //Add Constructor and impletment Interface and all requied methods.
-    public class Main implements ChatBotCustomResultProcessor
+    public final class Main implements ChatBotCustomResultProcessor
     {
         private final String endpoint;
         private final int timeout;
