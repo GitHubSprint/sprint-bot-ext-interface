@@ -8,7 +8,7 @@ Generated library should be copied to folder ./lib of SprinBot server. Remember 
 
         mvn -DskipTests install
 
-### Use in your Maven project:
+### Use in your Maven project <dependencies>:
 ```xml
         <!-- https://github.com/GitHubSprint/sprint-bot-ext-interface -->         
         <dependency>
@@ -16,52 +16,6 @@ Generated library should be copied to folder ./lib of SprinBot server. Remember 
             <artifactId>sprint-bot-ext-interface</artifactId>
             <version>1.0.2</version>            
         </dependency>
-```
-
-### Usage examle
-
-#### Create e.g Main.class
-
-```java
-    import pl.sprint.chatbot.ext.lib.logger.Logger;
-    import pl.sprint.chatbot.ext.lib.ChatBotCustomResultProcessor;
-    import pl.sprint.chatbot.ext.lib.Conf;
-    import pl.sprint.chatbot.ext.lib.Utils;
-    import pl.sprint.chatbot.ext.lib.logger.Logger;
-
-    //Add Constructor and impletment Interface and all requied methods.
-    public final class Main implements ChatBotCustomResultProcessor
-    {
-        private final String endpoint;
-        private final int timeout;
-        
-        //setLogger required in Constructor
-        public Main() 
-        {    
-            setLogger("sprintbot.ext.lib"); //name of log file
-            
-            //example getconfigure parameters
-            Conf.configure("services.properties"); //name of config file if used [path=$SPRINBOTSERVER/config/plugins/services.properties]
-            endpoint = Conf.getValue("endpoint", "http://some_web_service_wsdl");
-            timeout = Integer.parseInt(Conf.getValue("timeout", "8000"));
-            
-        }
-
-        @Override
-        public String processCustomResultPocessor(String session, String parameter, String method) 
-        {
-            log("parameter: " + parameter + " method: " + method, session);
-        }
-        @Override
-        public void setLogger(String logname) {
-            Logger.getInstance().setLogger(logname);
-        }
-
-        @Override
-        public void log(String message, String session) {
-            Logger.getInstance().WriteToLog("Main " + session + " : " + message);
-        }
-    }
 ```
 
 ### pom.xml settings (not required)
@@ -138,3 +92,51 @@ Generated library should be copied to folder ./lib of SprinBot server. Remember 
         </plugins>
     </build>
 ```
+
+### Usage examle
+
+#### Create e.g Main.class
+
+```java
+    import pl.sprint.chatbot.ext.lib.logger.Logger;
+    import pl.sprint.chatbot.ext.lib.ChatBotCustomResultProcessor;
+    import pl.sprint.chatbot.ext.lib.Conf;
+    import pl.sprint.chatbot.ext.lib.Utils;
+    import pl.sprint.chatbot.ext.lib.logger.Logger;
+
+    //Add Constructor and impletment Interface and all requied methods.
+    public final class Main implements ChatBotCustomResultProcessor
+    {
+        private final String endpoint;
+        private final int timeout;
+        
+        //setLogger required in Constructor
+        public Main() 
+        {    
+            setLogger("sprintbot.ext.lib"); //name of log file
+            
+            //example getconfigure parameters
+            Conf.configure("services.properties"); //name of config file if used [path=$SPRINBOTSERVER/config/plugins/services.properties]
+            endpoint = Conf.getValue("endpoint", "http://some_web_service_wsdl");
+            timeout = Integer.parseInt(Conf.getValue("timeout", "8000"));
+            
+        }
+
+        @Override
+        public String processCustomResultPocessor(String session, String parameter, String method) 
+        {
+            log("parameter: " + parameter + " method: " + method, session);
+        }
+        @Override
+        public void setLogger(String logname) {
+            Logger.getInstance().setLogger(logname);
+        }
+
+        @Override
+        public void log(String message, String session) {
+            Logger.getInstance().WriteToLog("Main " + session + " : " + message);
+        }
+    }
+```
+
+
