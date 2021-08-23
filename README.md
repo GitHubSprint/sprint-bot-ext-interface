@@ -8,7 +8,7 @@ Generated library should be copied to folder ./lib of SprinBot server. Remember 
 
         mvn -DskipTests install
 
-### Use in your Maven project <dependencies>:
+### Use in your Maven project pom.xml (required):
 ```xml
         <!-- https://github.com/GitHubSprint/sprint-bot-ext-interface -->         
         <dependency>
