@@ -27,7 +27,7 @@ Generated library should be copied to folder ./lib of SprinBot server. Remember 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <!-- path to MAIN class used in Build section as ${mainClass} -->
-        <mainClass>pl.sprint.chatbot.ext.lib.pgg.Main</mainClass>
+        <mainClass>pl.sprint.Main</mainClass>
     </properties>
 ```
 
