@@ -66,8 +66,7 @@ public final class Logger
 	
 	/** 
 	 An LogWriter instance that exposes a single instance
-        * @return 
-	*/
+	 */
 	public static Logger getInstance()
 	{
 			// If the instance is null then create one and init the Queue               
