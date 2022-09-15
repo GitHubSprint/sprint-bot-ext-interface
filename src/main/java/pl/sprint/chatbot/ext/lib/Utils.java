@@ -28,10 +28,10 @@ public class Utils {
     
     public static URL createEndpointUrl(String _endpoint, final int timeout) throws MalformedURLException 
     {
-        return new URL(null, _endpoint,
-                new URLStreamHandler() { // Anonymous (inline) class
+        URL endpoint = new URL(null, _endpoint,
+                    new URLStreamHandler() { // Anonymous (inline) class
                     @Override
-                    protected URLConnection openConnection(URL url) throws IOException
+                    protected URLConnection openConnection(URL url) throws IOException 
                     {
                         URL clone_url = new URL(url.toString());
                         HttpURLConnection clone_urlconnection = (HttpURLConnection) clone_url.openConnection();
@@ -41,15 +41,19 @@ public class Utils {
                         return(clone_urlconnection);
                     }
                 });
+        
+        return endpoint;
+        
     }
-
-
-    public static void trustAllCertificates()
+    
+    
+    public static void trustAllCertyficates()
     {
         try {
-            TrustManager[] trustAllCerts = new TrustManager[]
+            ////////////////////////////////////////////////////////////////////////////////
+            TrustManager[] trustAllCerts = new TrustManager[] 
             {
-                    new X509TrustManager()
+                    new X509TrustManager() 
                     {
                             public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                                     return null;
@@ -68,9 +72,10 @@ public class Utils {
                     }
             };
             HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+            /////////////////////////////////////////////////////////////////////////////////
         } catch (Exception ex) {StringWriter sw = new StringWriter();
             ex.printStackTrace();
         }
     }
-
+    
 }

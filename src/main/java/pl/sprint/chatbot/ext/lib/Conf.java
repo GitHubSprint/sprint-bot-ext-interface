@@ -5,8 +5,7 @@
  */
 package pl.sprint.chatbot.ext.lib;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.FileInputStream;
 import java.util.Properties;
 import pl.sprint.chatbot.ext.lib.logger.LogMessagePriority;
 import pl.sprint.chatbot.ext.lib.logger.Logger;
@@ -17,9 +16,11 @@ import pl.sprint.chatbot.ext.lib.logger.Logger;
  */
 public class Conf {
     
-    private static Properties appProps;
+    //private static String confFile; 
+    private static Properties appProps; 
 
-    private static boolean serviceInitialized = false;
+    // flaga czy system zostal zainicjalizowany
+    private static boolean serviceInitialzed = false;
     
     
     public static String getValue(String key, String defaultValue)
@@ -27,7 +28,7 @@ public class Conf {
         String ret = defaultValue; 
         if(appProps == null)
         {            
-            Logger.getInstance().WriteToLog("Config appProps is null, return default value" + defaultValue);
+            Logger.getInstance().WriteToLog("Config appProps is null, retirn default value" + defaultValue);
             return defaultValue; 
         }
         
@@ -47,20 +48,20 @@ public class Conf {
     
     public static void reConfigure(String confFileName)
     {
-        serviceInitialized = false;
+        serviceInitialzed = false;
         configure(confFileName);
     }
     
     public static void configure(String confFileName)
     {
-         Logger.getInstance().WriteToLog("Config configure " + serviceInitialized);
-        if (serviceInitialized)
+         Logger.getInstance().WriteToLog("Config configure " + serviceInitialzed);
+        if (serviceInitialzed)
             return;	
 		// init configuration    
                
        appProps = new Properties();
         try {
-            appProps.load(Files.newInputStream(Paths.get("config/plugins/" + confFileName)));
+            appProps.load(new FileInputStream("config/plugins/" + confFileName));
         } catch (Exception ex) {
             Logger.getInstance().WriteToLog("Config configure exception message: " + ex.getMessage(), LogMessagePriority.Error);
             appProps = null;

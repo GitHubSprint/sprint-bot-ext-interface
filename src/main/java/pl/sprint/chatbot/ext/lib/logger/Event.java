@@ -6,13 +6,12 @@ package pl.sprint.chatbot.ext.lib.logger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public final class Event<T>
 {
-	private final Map<String, T> namedListeners = new HashMap<>();
-        private final List<T> anonymousListeners = new java.util.ArrayList<>();
+	private final java.util.Map<String, T> namedListeners = new HashMap<>();
+        private final java.util.List<T> anonymousListeners = new java.util.ArrayList<>();
         
 	public void addListener(String methodName, T namedEventHandlerMethod)
 	{
