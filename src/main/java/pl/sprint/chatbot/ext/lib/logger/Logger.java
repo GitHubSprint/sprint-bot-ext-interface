@@ -28,8 +28,7 @@ public final class Logger
         {
             SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");//dd/MM/yyyy
             Date now = new Date();
-            String strDate = sdfDate.format(now);
-            return strDate;
+			return sdfDate.format(now);
         } 
         
         
@@ -40,7 +39,7 @@ public final class Logger
 		boolean folderExists = (new File(logFilePath)).isDirectory();
 		if (!folderExists)
 		{
-                    (new File(logFilePath)).mkdirs();
+			(new File(logFilePath)).mkdirs();
 		}
 	}
         
@@ -82,7 +81,7 @@ public final class Logger
 	}
         
         
-        public void WriteToLog(String message)
+	public void WriteToLog(String message)
         {
             this.WriteToLog(message, LogMessagePriority.Info);
         }
@@ -93,9 +92,7 @@ public final class Logger
 		// Send log message via event to parent app
 		if (logMessageEvent != null)
 		{                    
-                    logMessageEvent.listeners().forEach((listener) -> {
-                        listener.invoke(getCurrentTimeStamp() + "   " + message);
-                    });
+			logMessageEvent.listeners().forEach((listener) -> listener.invoke(getCurrentTimeStamp() + "   " + message));
 		}
 
 		// Check if log message should be written to file
@@ -118,7 +115,7 @@ public final class Logger
 			File f = new File(logFile);
 			logSize = f.length();
 		}
-		catch (java.lang.Exception e)
+		catch (Exception e)
 		{
 		}
 
@@ -132,29 +129,26 @@ public final class Logger
 			}
 			catch (IOException ex)
 			{
-                            ex.printStackTrace();
-                            return;
+				ex.printStackTrace();
+				return;
 			}
 		}
 
 		// Write to log file
 		try
-		{                   
-                    
-                    String toLog = getCurrentTimeStamp() + " " + message + "\n";
-                     
-                    File f = new File(logFile);
-                    if(!f.exists()){
-                      f.createNewFile();
-                    }
-                    
-                    Files.write(Paths.get(logFile), toLog.getBytes((StandardCharsets.UTF_8)), StandardOpenOption.APPEND);
-                                        			
+		{
+			String toLog = getCurrentTimeStamp() + " " + message + "\n";
 
+			File f = new File(logFile);
+			if(!f.exists()){
+			  f.createNewFile();
+			}
+
+			Files.write(Paths.get(logFile), toLog.getBytes((StandardCharsets.UTF_8)), StandardOpenOption.APPEND);
 		}
 		catch (IOException ex)
 		{
-                    ex.printStackTrace();
+			ex.printStackTrace();
 		}
 		
 	}
