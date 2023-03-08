@@ -41,8 +41,6 @@ public class Conf {
             Logger.getInstance().WriteToLog("Config getValue exception message: " + e.getMessage(), LogMessagePriority.Error);            
         }
         
-        Logger.getInstance().WriteToLog("Config getValue key: " + key + " value: " + ret);
-        
         return ret;
     }
     
