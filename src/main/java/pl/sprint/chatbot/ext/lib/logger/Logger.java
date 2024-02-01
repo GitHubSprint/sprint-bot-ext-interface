@@ -24,27 +24,23 @@ public final class Logger
 	private static final Event<logMessageEventDelegate> logMessageEvent = new Event<logMessageEventDelegate>();
         
 
-        private static String getCurrentTimeStamp() 
-        {
-            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");//dd/MM/yyyy
-            Date now = new Date();
-			return sdfDate.format(now);
-        } 
+	private static String getCurrentTimeStamp() {
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");//dd/MM/yyyy
+		Date now = new Date();
+		return sdfDate.format(now);
+	}
         
         
-        public void setLogger(String logFileName)
-	{				
+	public void setLogger(String logFileName) {
 		this.logFileName = logFileName;				
 
 		boolean folderExists = (new File(logFilePath)).isDirectory();
-		if (!folderExists)
-		{
+		if (!folderExists) {
 			(new File(logFilePath)).mkdirs();
 		}
 	}
         
-        public void setLogger(int logLevel, String logFilePath, String logFileName, long logFileSize)
-	{
+	public void setLogger(int logLevel, String logFilePath, String logFileName, long logFileSize) {
 		
 		this.logLevel = logLevel;
 		this.logFilePath = logFilePath;
@@ -52,8 +48,7 @@ public final class Logger
 		this.logFileSize = logFileSize;		
 
 		boolean folderExists = (new File(logFilePath)).isDirectory();
-		if (!folderExists)
-		{
+		if (!folderExists) {
 			(new File(logFilePath)).mkdirs();
 		}
 	}
@@ -67,13 +62,10 @@ public final class Logger
 	 An LogWriter instance that exposes a single instance
         * @return 
 	*/
-	public static Logger getInstance()
-	{
+	public static Logger getInstance() {
 			// If the instance is null then create one and init the Queue               
-		synchronized (m_oPadLock)
-		{
-			if (instance == null)
-			{
+		synchronized (m_oPadLock) {
+			if (instance == null) {
 				instance = new Logger();
 			}
 			return instance;
@@ -87,17 +79,18 @@ public final class Logger
         }
 
 	// Write message to log file
-	public void WriteToLog(String message, LogMessagePriority priority)
-	{
+	public void WriteToLog(String message, LogMessagePriority priority) {
+		String os = System.getProperty("os.name").toLowerCase();
+		if(os.contains("win")){
+			System.out.println(getCurrentTimeStamp() + "  " + message);
+		}
 		// Send log message via event to parent app
-		if (logMessageEvent != null)
-		{                    
+		if (logMessageEvent != null) {
 			logMessageEvent.listeners().forEach((listener) -> listener.invoke(getCurrentTimeStamp() + "   " + message));
 		}
 
 		// Check if log message should be written to file
-		if (priority.getValue() < logLevel)
-		{
+		if (priority.getValue() < logLevel) {
 			return;
 		}
 
@@ -110,33 +103,24 @@ public final class Logger
 		long logSize = 0;
 
 		// Get log file size
-		try
-		{
+		try {
 			File f = new File(logFile);
 			logSize = f.length();
-		}
-		catch (Exception e)
-		{
-		}
+		} catch (Exception e) {}
 
 		// Rollover old log file if size is exceeded
-		if (logSize > logFileSize)
-		{
-			try
-			{
+		if (logSize > logFileSize) {
+			try {
 				new File(oldLogFile).delete();
 				Files.move(Paths.get(logFile), Paths.get(oldLogFile));
-			}
-			catch (IOException ex)
-			{
+			} catch (IOException ex) {
 				ex.printStackTrace();
 				return;
 			}
 		}
 
 		// Write to log file
-		try
-		{
+		try {
 			String toLog = getCurrentTimeStamp() + " " + message + "\n";
 
 			File f = new File(logFile);
@@ -145,9 +129,7 @@ public final class Logger
 			}
 
 			Files.write(Paths.get(logFile), toLog.getBytes((StandardCharsets.UTF_8)), StandardOpenOption.APPEND);
-		}
-		catch (IOException ex)
-		{
+		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 		
