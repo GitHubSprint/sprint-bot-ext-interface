@@ -1,4 +1,4 @@
-# External SprintBot plugin interface and logger v1.0.2
+# External SprintBot plugin interface and logger.
 
 Generated library should be copied to folder ./lib of SprinBot server.
 
