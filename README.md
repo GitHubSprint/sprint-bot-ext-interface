@@ -1,6 +1,6 @@
 # External SprintBot plugin interface and logger v1.0.2
 
-Generated library should be copied to folder ./lib of SprinBot server. Remember to restart SprintBot service after update. 
+Generated library should be copied to folder ./lib of SprinBot server.
 
 ## Usage - Build Yourself
 
@@ -105,14 +105,12 @@ Generated library should be copied to folder ./lib of SprinBot server. Remember 
     import pl.sprint.chatbot.ext.lib.logger.Logger;
 
     //Add Constructor and impletment Interface and all requied methods.
-    public final class Main implements ChatBotCustomResultProcessor
-    {
+    public final class Main implements ChatBotCustomResultProcessor {
         private final String endpoint;
         private final int timeout;
         
         //setLogger required in Constructor
-        public Main() 
-        {    
+        public Main() {    
             setLogger("sprintbot.ext.lib"); //name of log file
             
             //example getconfigure parameters
@@ -123,8 +121,7 @@ Generated library should be copied to folder ./lib of SprinBot server. Remember 
         }
 
         @Override
-        public String processCustomResultPocessor(String session, String parameter, String method) 
-        {
+        public String processCustomResultPocessor(String session, String parameter, String method) {
             log("parameter: " + parameter + " method: " + method, session);
         }
         @Override
