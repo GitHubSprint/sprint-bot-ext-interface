@@ -66,7 +66,7 @@ Generated library should be copied to folder ./lib of SprinBot server.
                     <id>simple-command</id>
                     <phase>package</phase>
                     <goals>
-                      <goal>attached</goal>
+                      <goal>single</goal>
                     </goals>
                   </execution>
                 </executions>
