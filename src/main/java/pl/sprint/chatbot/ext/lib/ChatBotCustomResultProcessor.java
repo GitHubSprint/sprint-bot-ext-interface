@@ -18,7 +18,7 @@ public interface ChatBotCustomResultProcessor {
      */
     String processCustomResultPocessor(String session, String parameter, String method);
 
-    void clear();
+    void clear(String session);
     /**
      * Required to set logname, please add this method to Constructor.
      * Example: Logger.getInstance().setLogger(logname);
