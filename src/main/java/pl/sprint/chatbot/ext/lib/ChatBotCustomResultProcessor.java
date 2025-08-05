@@ -16,19 +16,20 @@ public interface ChatBotCustomResultProcessor {
      * @param method name of method
      * @return 
      */
-    public String processCustomResultPocessor(String session, String parameter, String method);
-    
+    String processCustomResultPocessor(String session, String parameter, String method);
+
+    void clear();
     /**
      * Required to set logname, please add this method to Constructor.
      * Example: Logger.getInstance().setLogger(logname);
      * @param logname 
      */
-    public void setLogger(String logname);    
+    void setLogger(String logname);
     /**
      * Log message 
      * Example: Logger.getInstance().WriteToLog("Main " + session + " : " + message);
      * @param message message to log.
      * @param session  chat session id.
-     */       
-    public void log(String message, String session);    
+     */
+    void log(String message, String session);
 }
