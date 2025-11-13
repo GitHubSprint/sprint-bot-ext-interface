@@ -12,16 +12,14 @@ import java.util.Date;
  * Logger.getInstance().WriteToLog("Class", "String to log", LogMessagePriority.Info);
 */
 
-
-public final class Logger
-{
+public final class Logger {
 	private static Logger instance;
 	private static final Object m_oPadLock = new Object();
-        private long logFileSize = 100000000;
-        private String logFilePath = "logs/";       
+    private long logFileSize = 100000000;
+    private String logFilePath = "logs/";
 	private int logLevel = 1;	
 	private String logFileName = "sprintbot.ext.lib"; 	
-	private static final Event<logMessageEventDelegate> logMessageEvent = new Event<logMessageEventDelegate>();
+	private static final Event<logMessageEventDelegate> logMessageEvent = new Event<>();
         
 
 	private static String getCurrentTimeStamp() {
@@ -30,7 +28,7 @@ public final class Logger
 		return sdfDate.format(now);
 	}
         
-        
+
 	public void setLogger(String logFileName) {
 		this.logFileName = logFileName;				
 
@@ -39,9 +37,8 @@ public final class Logger
 			(new File(logFilePath)).mkdirs();
 		}
 	}
-        
+
 	public void setLogger(int logLevel, String logFilePath, String logFileName, long logFileSize) {
-		
 		this.logLevel = logLevel;
 		this.logFilePath = logFilePath;
 		this.logFileName = logFileName;
@@ -60,7 +57,7 @@ public final class Logger
 	
 	/** 
 	 An LogWriter instance that exposes a single instance
-        * @return 
+        * @return Logger instance
 	*/
 	public static Logger getInstance() {
 			// If the instance is null then create one and init the Queue               
@@ -73,20 +70,20 @@ public final class Logger
 	}
         
         
-	public void WriteToLog(String message)
-        {
-            this.WriteToLog(message, LogMessagePriority.Info);
-        }
+	public void WriteToLog(String message) {
+        this.WriteToLog(message, LogMessagePriority.Info);
+    }
 
 	// Write message to log file
 	public void WriteToLog(String message, LogMessagePriority priority) {
 		String os = System.getProperty("os.name").toLowerCase();
-		if(os.contains("win")){
+		if(os.contains("win")) {
 			System.out.println(getCurrentTimeStamp() + "  " + message);
 		}
 		// Send log message via event to parent app
 		if (logMessageEvent != null) {
-			logMessageEvent.listeners().forEach((listener) -> listener.invoke(getCurrentTimeStamp() + "   " + message));
+			logMessageEvent.listeners()
+                    .forEach((listener) -> listener.invoke(getCurrentTimeStamp() + "   " + message));
 		}
 
 		// Check if log message should be written to file
@@ -96,7 +93,6 @@ public final class Logger
 
 		// Create path & filename
 		String logPath = logFilePath;
-		
 
 		String logFile = logPath + logFileName + ".log";
 		String oldLogFile = logPath + logFileName + ".old";
@@ -106,7 +102,7 @@ public final class Logger
 		try {
 			File f = new File(logFile);
 			logSize = f.length();
-		} catch (Exception e) {}
+		} catch (Exception ignored) {}
 
 		// Rollover old log file if size is exceeded
 		if (logSize > logFileSize) {
@@ -114,7 +110,6 @@ public final class Logger
 				new File(oldLogFile).delete();
 				Files.move(Paths.get(logFile), Paths.get(oldLogFile));
 			} catch (IOException ex) {
-				ex.printStackTrace();
 				return;
 			}
 		}
@@ -129,9 +124,7 @@ public final class Logger
 			}
 
 			Files.write(Paths.get(logFile), toLog.getBytes((StandardCharsets.UTF_8)), StandardOpenOption.APPEND);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+		} catch (IOException ignored) {}
 		
 	}
 }

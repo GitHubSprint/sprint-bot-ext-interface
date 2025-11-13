@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021 Sprint S.A.
+ * Copyright © 2025 Sprint S.A.
  * Contact: slawomir.kostrzewa@sprint.pl
 
  */
@@ -16,7 +16,6 @@ import pl.sprint.chatbot.ext.lib.logger.Logger;
  * @author Sławomir Kostrzewa
  */
 public class Conf {
-    
 
     private static Properties appProps; 
 
@@ -24,11 +23,9 @@ public class Conf {
     private static boolean serviceInitialized = false;
     
     
-    public static String getValue(String key, String defaultValue)
-    {
+    public static String getValue(String key, String defaultValue) {
         String ret = defaultValue; 
-        if(appProps == null)
-        {            
+        if(appProps == null) {
             Logger.getInstance().WriteToLog("Config appProps is null, return default value" + defaultValue);
             return defaultValue; 
         }
@@ -45,14 +42,12 @@ public class Conf {
     }
     
     
-    public static void reConfigure(String confFileName)
-    {
+    public static void reConfigure(String confFileName) {
         serviceInitialized = false;
         configure(confFileName);
     }
     
-    public static void configure(String confFileName)
-    {
+    public static void configure(String confFileName) {
          Logger.getInstance().WriteToLog("Config configure " + serviceInitialized);
         if (serviceInitialized)
             return;	
@@ -65,7 +60,6 @@ public class Conf {
             Logger.getInstance().WriteToLog("Config configure exception message: " + ex.getMessage(), LogMessagePriority.Error);
             appProps = null;
         }
-        
     }
     
    

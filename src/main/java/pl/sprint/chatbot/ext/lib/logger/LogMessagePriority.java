@@ -2,49 +2,33 @@ package pl.sprint.chatbot.ext.lib.logger;
 
 
 import java.util.HashMap;
+import java.util.Map;
 
-public enum LogMessagePriority
-{
-	Emergency(5),
-	Error(4),
-	Info(2),
-	Debug(1);
+public enum LogMessagePriority {
+    Emergency(5),
+    Error(4),
+    Info(2),
+    Debug(1);
 
-	public static final int SIZE = java.lang.Integer.SIZE;
+    private static final Map<Integer, LogMessagePriority> VALUE_MAP = new HashMap<>();
 
-	private final int intValue;
-	private static volatile HashMap<Integer, LogMessagePriority> mappings;
-	private static java.util.HashMap<Integer, LogMessagePriority> getMappings()
-	{            
-            HashMap<Integer, LogMessagePriority> _mappings = LogMessagePriority.mappings;
-            
-            if (_mappings == null)
-            {
-                    synchronized (LogMessagePriority.class)
-                    {
-                        LogMessagePriority.mappings = _mappings;                        
-                        if (_mappings == null)
-                        {
-                                LogMessagePriority.mappings = new java.util.HashMap<>();
-                        }
-                    }
-            }
-            return mappings;
-	}
+    static {
+        for (LogMessagePriority priority : values()) {
+            VALUE_MAP.put(priority.intValue, priority);
+        }
+    }
 
-	private LogMessagePriority(int value)
-	{
-		intValue = value;
-		getMappings().put(value, this);
-	}
+    private final int intValue;
 
-	public int getValue()
-	{
-		return intValue;
-	}
+    LogMessagePriority(int value) {
+        this.intValue = value;
+    }
 
-	public static LogMessagePriority forValue(int value)
-	{
-		return getMappings().get(value);
-	}
+    public int getValue() {
+        return intValue;
+    }
+
+    public static LogMessagePriority forValue(int value) {
+        return VALUE_MAP.get(value);
+    }
 }

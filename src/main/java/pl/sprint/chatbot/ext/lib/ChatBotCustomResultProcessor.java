@@ -1,28 +1,29 @@
 /*
- * Copyright © 2019 Sprint S.A.
+ * Copyright © 2025 Sprint S.A.
  * Contact: slawomir.kostrzewa@sprint.pl
  */
 package pl.sprint.chatbot.ext.lib;
 
-/**
- * Interfejs wymaganay przez Bot.
- * @author Sławomir Kostrzewa
- */
 public interface ChatBotCustomResultProcessor {
     /**
      * External lib, custom processor interface. 
-     * @param session chat session itentity
+     * @param session chat session identity
      * @param parameter method parameter. 
      * @param method name of method
-     * @return 
+     * @return String result from custom processor.
      */
     String processCustomResultProcessor(String session, String parameter, String method);
 
+    /**
+     * Clear session data.
+     * Example: ChatBotCustomResultProcessor.getInstance().clear(session);
+     * @param session chat session id.
+     */
     void clear(String session);
     /**
      * Required to set logname, please add this method to Constructor.
      * Example: Logger.getInstance().setLogger(logname);
-     * @param logname 
+     * @param logname log file name.
      */
     void setLogger(String logname);
     /**
