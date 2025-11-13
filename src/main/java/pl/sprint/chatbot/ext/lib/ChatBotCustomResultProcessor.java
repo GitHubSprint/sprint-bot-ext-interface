@@ -16,7 +16,7 @@ public interface ChatBotCustomResultProcessor {
      * @param method name of method
      * @return 
      */
-    String processCustomResultPocessor(String session, String parameter, String method);
+    String processCustomResultProcessor(String session, String parameter, String method);
 
     void clear(String session);
     /**

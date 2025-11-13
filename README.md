@@ -14,7 +14,7 @@ Generated library should be copied to folder ./lib of SprinBot server.
         <dependency>
             <groupId>pl.sprint</groupId>
             <artifactId>sprint-bot-ext-interface</artifactId>
-            <version>1.0.5</version>            
+            <version>2.0.1</version>            
         </dependency>
 ```
 
@@ -24,8 +24,8 @@ Generated library should be copied to folder ./lib of SprinBot server.
 ```xml
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <!-- path to MAIN class used in Build section as ${mainClass} -->
         <mainClass>pl.sprint.Main</mainClass>
     </properties>
@@ -37,7 +37,7 @@ Generated library should be copied to folder ./lib of SprinBot server.
         <plugins>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.4.2</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -74,7 +74,7 @@ Generated library should be copied to folder ./lib of SprinBot server.
             <plugin>
                <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-antrun-plugin</artifactId>
-               <version>1.8</version>
+               <version>3.1.0</version>
                <executions>
                    <execution>
                        <phase>install</phase>
@@ -121,7 +121,7 @@ Generated library should be copied to folder ./lib of SprinBot server.
         }
 
         @Override
-        public String processCustomResultPocessor(String session, String parameter, String method) {
+        public String processCustomResultProcessor(String session, String parameter, String method) {
             log("parameter: " + parameter + " method: " + method, session);
         }
         @Override
@@ -132,6 +132,11 @@ Generated library should be copied to folder ./lib of SprinBot server.
         @Override
         public void log(String message, String session) {
             Logger.getInstance().WriteToLog("Main " + session + " : " + message);
+        }
+
+        @Override
+        public void clear(String session) {
+            log("clear session: " + session, session);
         }
     }
 ```
