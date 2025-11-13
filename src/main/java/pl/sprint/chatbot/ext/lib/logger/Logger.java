@@ -13,118 +13,99 @@ import java.util.Date;
 */
 
 public final class Logger {
-	private static Logger instance;
-	private static final Object m_oPadLock = new Object();
+    private static Logger instance;
+    private static final Object m_oPadLock = new Object();
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    private static final String LOG_EXTENSION = ".log";
+    private static final String OLD_LOG_EXTENSION = ".old";
+
     private long logFileSize = 100000000;
     private String logFilePath = "logs/";
-	private int logLevel = 1;	
-	private String logFileName = "sprintbot.ext.lib"; 	
-	private static final Event<logMessageEventDelegate> logMessageEvent = new Event<>();
-        
+    private int logLevel = 1;
+    private String logFileName = "sprintbot.ext.lib";
+    private static final Event<logMessageEventDelegate> logMessageEvent = new Event<>();
 
-	private static String getCurrentTimeStamp() {
-		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");//dd/MM/yyyy
-		Date now = new Date();
-		return sdfDate.format(now);
-	}
-        
-
-	public void setLogger(String logFileName) {
-		this.logFileName = logFileName;				
-
-		boolean folderExists = (new File(logFilePath)).isDirectory();
-		if (!folderExists) {
-			(new File(logFilePath)).mkdirs();
-		}
-	}
-
-	public void setLogger(int logLevel, String logFilePath, String logFileName, long logFileSize) {
-		this.logLevel = logLevel;
-		this.logFilePath = logFilePath;
-		this.logFileName = logFileName;
-		this.logFileSize = logFileSize;		
-
-		boolean folderExists = (new File(logFilePath)).isDirectory();
-		if (!folderExists) {
-			(new File(logFilePath)).mkdirs();
-		}
-	}
-
-	/** 
-	 Private constructor to prevent instance creation
-	*/
-	private Logger(){}
-	
-	/** 
-	 An LogWriter instance that exposes a single instance
-        * @return Logger instance
-	*/
-	public static Logger getInstance() {
-			// If the instance is null then create one and init the Queue               
-		synchronized (m_oPadLock) {
-			if (instance == null) {
-				instance = new Logger();
-			}
-			return instance;
-		}
-	}
-        
-        
-	public void WriteToLog(String message) {
-        this.WriteToLog(message, LogMessagePriority.Info);
+    private static String getCurrentTimeStamp() {
+        return DATE_FORMAT.format(new Date());
     }
 
-	// Write message to log file
-	public void WriteToLog(String message, LogMessagePriority priority) {
-		String os = System.getProperty("os.name").toLowerCase();
-		if(os.contains("win")) {
-			System.out.println(getCurrentTimeStamp() + "  " + message);
-		}
-		// Send log message via event to parent app
-		if (logMessageEvent != null) {
-			logMessageEvent.listeners()
-                    .forEach((listener) -> listener.invoke(getCurrentTimeStamp() + "   " + message));
-		}
+    public void setLogger(String logFileName) {
+        this.logFileName = logFileName;
+        ensureLogDirectoryExists();
+    }
 
-		// Check if log message should be written to file
-		if (priority.getValue() < logLevel) {
-			return;
-		}
+    public void setLogger(int logLevel, String logFilePath, String logFileName, long logFileSize) {
+        this.logLevel = logLevel;
+        this.logFilePath = logFilePath;
+        this.logFileName = logFileName;
+        this.logFileSize = logFileSize;
+        ensureLogDirectoryExists();
+    }
 
-		// Create path & filename
-		String logPath = logFilePath;
+    private void ensureLogDirectoryExists() {
+        Path path = Paths.get(logFilePath);
+        if (!Files.isDirectory(path)) {
+            try {
+                Files.createDirectories(path);
+            } catch (IOException ignored) {}
+        }
+    }
 
-		String logFile = logPath + logFileName + ".log";
-		String oldLogFile = logPath + logFileName + ".old";
-		long logSize = 0;
+    private Logger() {}
 
-		// Get log file size
-		try {
-			File f = new File(logFile);
-			logSize = f.length();
-		} catch (Exception ignored) {}
+    public static Logger getInstance() {
+        if (instance == null) {
+            synchronized (m_oPadLock) {
+                if (instance == null) {
+                    instance = new Logger();
+                }
+            }
+        }
+        return instance;
+    }
 
-		// Rollover old log file if size is exceeded
-		if (logSize > logFileSize) {
-			try {
-				new File(oldLogFile).delete();
-				Files.move(Paths.get(logFile), Paths.get(oldLogFile));
-			} catch (IOException ex) {
-				return;
-			}
-		}
+    public void WriteToLog(String message) {
+        WriteToLog(message, LogMessagePriority.Info);
+    }
 
-		// Write to log file
-		try {
-			String toLog = getCurrentTimeStamp() + " " + message + "\n";
+    public void WriteToLog(String message, LogMessagePriority priority) {
+        String timestamp = getCurrentTimeStamp();
+        String formattedMessage = timestamp + " " + message;
 
-			File f = new File(logFile);
-			if(!f.exists()){
-			  f.createNewFile();
-			}
+        // Console output for Windows
+        if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            System.out.println(formattedMessage);
+        }
 
-			Files.write(Paths.get(logFile), toLog.getBytes((StandardCharsets.UTF_8)), StandardOpenOption.APPEND);
-		} catch (IOException ignored) {}
-		
-	}
+        // Event notification
+        if (logMessageEvent != null) {
+            logMessageEvent.listeners().forEach(listener -> listener.invoke(formattedMessage));
+        }
+
+        // Skip file logging if priority is below threshold
+        if (priority.getValue() < logLevel) {
+            return;
+        }
+
+        writeToLogFile(formattedMessage);
+    }
+
+    private void writeToLogFile(String message) {
+        Path logPath = Paths.get(logFilePath + logFileName + LOG_EXTENSION);
+        Path oldLogPath = Paths.get(logFilePath + logFileName + OLD_LOG_EXTENSION);
+
+        // Rollover if size exceeded
+        try {
+            if (Files.exists(logPath) && Files.size(logPath) > logFileSize) {
+                Files.deleteIfExists(oldLogPath);
+                Files.move(logPath, oldLogPath);
+            }
+        } catch (IOException ignored) {}
+
+        // Write to log file
+        try {
+            Files.writeString(logPath, message + "\n",
+                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } catch (IOException ignored) {}
+    }
 }
