@@ -12,7 +12,7 @@ public interface ChatBotCustomResultProcessor {
      * @param method name of method
      * @return String result from custom processor.
      */
-    String processCustomResultProcessor(String session, String parameter, String method);
+    String processCustomResultPocessor(String session, String parameter, String method);
 
     /**
      * Clear session data.
