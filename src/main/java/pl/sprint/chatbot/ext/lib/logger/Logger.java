@@ -22,22 +22,22 @@ public final class Logger {
     private long logFileSize = 100000000;
     private String logFilePath = "logs/";
     private int logLevel = 1;
-    private String logFileName = "sprintbot.ext.lib";
+    public static String logFileName = "sprintbot.ext.lib";
     private static final Event<logMessageEventDelegate> logMessageEvent = new Event<>();
 
     private static String getCurrentTimeStamp() {
         return DATE_FORMAT.format(new Date());
     }
 
-    public void setLogger(String logFileName) {
-        this.logFileName = logFileName;
+    public void setLogger(String logName) {
+        logFileName = logName;
         ensureLogDirectoryExists();
     }
 
-    public void setLogger(int logLevel, String logFilePath, String logFileName, long logFileSize) {
+    public void setLogger(int logLevel, String logFilePath, String logName, long logFileSize) {
         this.logLevel = logLevel;
         this.logFilePath = logFilePath;
-        this.logFileName = logFileName;
+        logFileName = logName;
         this.logFileSize = logFileSize;
         ensureLogDirectoryExists();
     }
